@@ -90,15 +90,16 @@ tests/test_game_logic.py:52:1: E302 expected 2 blank lines, found 1
 
 **Task given to both models:**
 
-<!-- Describe what you asked each model to do -->
+Both models got the same prompt: the original buggy `check_guess` function and the app code that turned the secret into a string on every even attempt, with the question "Explain what causes the bug and show how you would fix it."
 
 | | Model A | Model B |
 |-|---------|---------|
-| **Model name** | | |
-| **Response summary** | | |
-| **More Pythonic?** | | |
-| **Clearer explanation?** | | |
+| **Model name** | ChatGPT (sol 5.6) | Gemini 3.6 flash|
+| **Response summary** | Converts both `guess` and `secret` to `int` at the start of `check_guess`, swaps the two hint messages, removes the `try/except TypeError` block, and calls `check_guess` with `st.session_state.secret` directly. Short answer, mostly code. | Names three causes: swapped hint text, string comparison on even attempts (`"9" > "42"` is True as text), and a claim that the win check gets skipped. The fix converts both values to `int` inside a `try/except` that returns a new `"Error"` outcome, swaps the hints, and removes the `str()` toggle in the caller. |
+| **More Pythonic?** | Yes. It is short and simple, with no extra error handling the app does not need. | Less. The new `"Error"` outcome is not handled anywhere else in the app, and `parse_guess` already rejects bad input, so the extra `try/except` is not needed. |
+| **Clearer explanation?** | No. It mostly shows code and explains the fix in one sentence. | Yes. It goes step by step and gives a concrete example (`"9" > "42"`). But one point is wrong: with the original code a correct guess still wins, because the `except` block compares `str(guess) == secret`. I checked it: `check_guess(50, "50")` returns `"Win"`. |
 
 **Which did you prefer and why?**
 
-<!-- Your conclusion -->
+For the fix I preferred ChatGPT, because it is simpler and fits this codebase. Gemini's version adds an `"Error"` outcome that the rest of the game does not know about. For understanding the bug Gemini was easier to follow, but one of its three claims was wrong, and I only noticed after running the original function. Both models agreed on the real causes, swapped hints and the secret becoming a string, which matches the fix I applied: swap the messages and always pass the secret as a number.
+
