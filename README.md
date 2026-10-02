@@ -53,6 +53,7 @@ A sample game on Normal difficulty (range 1 to 100, 8 attempts):
 
 ## 🧪 Test Results
 
+```
 tests/test_game_logic.py::test_winning_guess PASSED                  [ 10%]
 tests/test_game_logic.py::test_guess_too_high PASSED                 [ 20%]
 tests/test_game_logic.py::test_guess_too_low PASSED                  [ 30%]
@@ -65,8 +66,9 @@ tests/test_game_logic.py::test_empty_input_asks_for_a_guess PASSED   [ 90%]
 tests/test_game_logic.py::test_huge_number_is_too_high PASSED        [100%]
 
 ============================ 10 passed in 0.02s ============================
+```
 
 ## 🚀 Stretch Features
 
-- - [x] Advanced Edge-Case Testing: 5 edge-case tests in `tests/test_game_logic.py` (negative number, decimal, text, empty input, huge number). All tests pass, see Test Results above.
+- [x] Advanced Edge-Case Testing: 5 edge-case tests in `tests/test_game_logic.py` (negative number, decimal, text, empty input, huge number). All tests pass, see Test Results above.
 
