@@ -38,23 +38,49 @@
 
 ## Linting & Style (SF9)
 
-> Document your use of AI for linting or code style improvements.
-
 **Prompt used:**
 
 ```
-<!-- Paste the prompt you gave the AI -->
+Add professional docstrings to every function in logic_utils.py and fix all flake8 warnings in logic_utils.py, app.py and tests/test_game_logic.py. Do not change how the game works.
 ```
 
-**Linting output before:**
+**Linting output before** (`python -m flake8 logic_utils.py app.py tests/`):
 
 ```
-<!-- Paste relevant linter warnings/errors -->
+app.py:3:80: E501 line too long (82 > 79 characters)
+app.py:4:80: E501 line too long (88 > 79 characters)
+app.py:51:80: E501 line too long (80 > 79 characters)
+app.py:52:80: E501 line too long (83 > 79 characters)
+app.py:55:1: E302 expected 2 blank lines, found 1
+app.py:61:1: E305 expected 2 blank lines after class or function definition, found 1
+app.py:108:80: E501 line too long (80 > 79 characters)
+app.py:109:80: E501 line too long (86 > 79 characters)
+logic_utils.py:48:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:3:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:8:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:13:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:18:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:24:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:32:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:38:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:42:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:47:1: E302 expected 2 blank lines, found 1
+tests/test_game_logic.py:52:1: E302 expected 2 blank lines, found 1
 ```
+
+**Linting output after:** flake8 printed nothing (0 warnings). `python -m pytest` still shows 10 passed.
 
 **Changes applied:**
 
-<!-- Describe what you changed based on the AI's suggestions -->
+- Added docstrings (summary, Args, Returns) to all four functions in `logic_utils.py`.
+- E302 / E305: added a second blank line between functions in `logic_utils.py` and the tests, and around `show_attempts_left` in `app.py`.
+- E501: split the long `# FIX:` comments into shorter lines and wrapped the `from logic_utils import ...` line into a multi-line import.
+- No names were changed and the game logic stayed the same. I checked this with pytest and by playing a game.
+
+**Suggested but not applied:**
+
+- Claude pointed out that the `except TypeError` branch in `check_guess` can no longer run, because `app.py` now always passes the secret as a number. I left it in, because my prompt said not to change how the game works.
+
 
 ---
 

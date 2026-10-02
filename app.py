@@ -1,7 +1,13 @@
 import random
 import streamlit as st
-# FIX: Refactored the game logic from app.py into logic_utils.py with Claude Code.
-from logic_utils import get_range_for_difficulty, parse_guess, check_guess, update_score
+# FIX: Refactored the game logic from app.py into logic_utils.py
+# with Claude Code.
+from logic_utils import (
+    get_range_for_difficulty,
+    parse_guess,
+    check_guess,
+    update_score,
+)
 
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
@@ -48,15 +54,18 @@ if "history" not in st.session_state:
 
 st.subheader("Make a guess")
 
-# FIX: This box is drawn before the guess is counted, so "Attempts left" was one
-# guess behind. Claude Code made it a placeholder that is redrawn after each guess.
+# FIX: This box is drawn before the guess is counted, so "Attempts left"
+# was one guess behind. Claude Code made it a placeholder that is redrawn
+# after each guess.
 attempts_box = st.empty()
+
 
 def show_attempts_left():
     attempts_box.info(
         f"Guess a number between 1 and 100. "
         f"Attempts left: {attempt_limit - st.session_state.attempts}"
     )
+
 
 show_attempts_left()
 
@@ -105,8 +114,9 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        # FIX: The secret was turned into a string on every even attempt, so the
-        # hints changed between attempts. I asked Claude Code to always pass a number.
+        # FIX: The secret was turned into a string on every even attempt,
+        # so the hints changed between attempts. I asked Claude Code to
+        # always pass a number.
         outcome, message = check_guess(guess_int, st.session_state.secret)
 
         if show_hint:
