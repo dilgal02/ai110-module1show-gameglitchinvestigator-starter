@@ -25,21 +25,31 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] **Describe the game's purpose.**
+  It is a number guessing game built with Streamlit. The game picks a secret number, and the player tries to guess it in a limited number of attempts. After each guess the game gives a hint to go higher or lower.
+- [x] **Detail which bugs you found.**
+  - The hints were backwards: a guess above the secret showed "Go HIGHER!". On every second attempt the secret was also turned into a string, so the numbers were compared as text and the hints changed between attempts.
+  - The attempts counter started at 1, so the game showed "Attempts left: 7" before any guess on Normal (8 attempts allowed).
+  - After a win, the New Game button did not start a new game. It kept saying "You already won."
+- [x] **Explain what fixes you applied.**
+  - Moved `get_range_for_difficulty`, `parse_guess`, `check_guess` and `update_score` from `app.py` into `logic_utils.py`.
+  - Swapped the two hint messages in `check_guess`, and made `app.py` always pass the secret as a number.
+  - Started the attempts counter at 0 and made "Attempts left" update right after each guess.
+  - Updated the starter tests and added two new tests for the hint bug (5 tests pass).
+  - The New Game bug is not fixed yet. The task asked to fix two bugs first.
+
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
+A sample game on Normal difficulty (range 1 to 100, 8 attempts):
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. Start the game with `python -m streamlit run app.py`. The game shows "Attempts left: 8".
+2. Open "Developer Debug Info" to see the secret number. In this game it is 63.
+3. User enters a guess of 40 and clicks Submit. The game shows "Go HIGHER!" (outcome "Too Low"). Attempts left: 7, score: -5.
+4. User enters a guess of 70. The game shows "Go LOWER!" (outcome "Too High"). Attempts left: 6, score: 0.
+5. User enters a guess of 60. The game shows "Go HIGHER!". Attempts left: 5, score: -5.
+6. User enters a guess of 63. The game shows "Correct!", balloons appear, and the message says "You won! The secret was 63. Final score: 45".
+7. The game is over. Any new guess shows "You already won. Start a new game to play again."
 
 ## 🧪 Test Results
 

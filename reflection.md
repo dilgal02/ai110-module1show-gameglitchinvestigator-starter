@@ -4,8 +4,6 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 1. What was broken when you started?
 
-## 1. What was broken when you started?
-
 The game opened fine and looked normal, but I could not win by following the hints. I used the Developer Debug Info panel to see the secret number and noticed the hints were wrong. The attempts counter and the New Game button were also broken.
 
 - The hints were backwards. When my guess was higher than the secret, the game told me to go higher.
@@ -16,9 +14,10 @@ The game opened fine and looked normal, but I could not win by following the hin
 
 | Input Used | Expected Behavior | Actual Behavior | Console Error / Output | Suspected Code Location |
 |------------|-------------------|-----------------|------------------------|-------------------------|
-| Secret 50, guess 60 | "Go LOWER!" hint | "Go HIGHER!" hint shown | none | `app.py`, `check_guess` |
-| Page just loaded, no guess yet (Normal) | "Attempts left: 8" | "Attempts left: 7" | none | `app.py`|
-| Win the game, then click New Game | New game starts | "You already won. Start a new game to play again." | none | `app.py`|
+| Secret 50, guess 60 | "Go LOWER!" hint | "Go HIGHER!" hint shown | none | `app.py`, `check_guess`: the "Too High" branch returned "Go HIGHER!" (messages swapped); also the secret was turned into a string on every even attempt |
+| Page just loaded, no guess yet (Normal) | "Attempts left: 8" | "Attempts left: 7" | none | `app.py`, `st.session_state.attempts = 1`: the counter started at 1 instead of 0 |
+| Win the game, then click New Game | New game starts | "You already won. Start a new game to play again." | none | `app.py`, `if new_game:` block: resets `attempts` and `secret` but not `status`, so the game stays "won" |
+
 
 
 ## 2. How did you use AI as a teammate?
