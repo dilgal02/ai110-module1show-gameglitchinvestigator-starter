@@ -50,13 +50,18 @@ The game opened fine and looked normal, but I could not win by following the hin
 
 ## 4. What did you learn about Streamlit and state?
 
-- How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+- **How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?**
+  - Every time you click a button or type in a box, Streamlit runs the whole `app.py` again from top to bottom. Normal variables start over on every rerun, so the game would forget the secret number and the attempts. `st.session_state` is a dictionary that survives reruns, so the secret, attempts, score and guesses are kept there. The rerun order also caused one of my bugs: the "Attempts left" box was drawn before the guess was counted, so it was one guess behind until it was redrawn after each guess.
+
 
 ---
 
 ## 5. Looking ahead: your developer habits
 
-- What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
-- What is one thing you would do differently next time you work with AI on a coding task?
-- In one or two sentences, describe how this project changed the way you think about AI generated code.
+- **What is one habit or strategy from this project that you want to reuse?**
+  - Fix one bug at a time: mark it with a `# FIXME` comment, select only those lines for the AI, then run pytest and commit before moving on.
+- **What is one thing you would do differently next time you work with AI on a coding task?**
+  - Give small, specific prompts from the start. At first the AI changed several files at once and did more than I asked, and I had to undo it.
+- **How did this project change the way you think about AI generated code?**
+  - AI code can look finished and still have bugs like swapped hints, and AI explanations can be wrong too: one of Gemini's claims about this bug was false. Now I check AI code with tests and by running it myself.
+

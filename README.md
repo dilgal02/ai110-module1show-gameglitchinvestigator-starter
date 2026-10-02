@@ -54,18 +54,19 @@ A sample game on Normal difficulty (range 1 to 100, 8 attempts):
 ## 🧪 Test Results
 
 ```
-tests/test_game_logic.py::test_winning_guess PASSED                  [ 10%]
-tests/test_game_logic.py::test_guess_too_high PASSED                 [ 20%]
-tests/test_game_logic.py::test_guess_too_low PASSED                  [ 30%]
-tests/test_game_logic.py::test_too_high_hint_says_go_lower PASSED    [ 40%]
-tests/test_game_logic.py::test_too_low_hint_says_go_higher PASSED    [ 50%]
-tests/test_game_logic.py::test_negative_number_is_too_low PASSED     [ 60%]
-tests/test_game_logic.py::test_decimal_guess_is_cut_to_whole_number PASSED [ 70%]
-tests/test_game_logic.py::test_text_is_not_a_number PASSED           [ 80%]
-tests/test_game_logic.py::test_empty_input_asks_for_a_guess PASSED   [ 90%]
-tests/test_game_logic.py::test_huge_number_is_too_high PASSED        [100%]
+tests/test_game_logic.py::test_winning_guess PASSED                      [  9%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 18%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 27%]
+tests/test_game_logic.py::test_too_high_hint_says_go_lower PASSED        [ 36%]
+tests/test_game_logic.py::test_too_low_hint_says_go_higher PASSED        [ 45%]
+tests/test_game_logic.py::test_negative_number_is_too_low PASSED         [ 54%]
+tests/test_game_logic.py::test_decimal_guess_is_cut_to_whole_number PASSED [ 63%]
+tests/test_game_logic.py::test_text_is_not_a_number PASSED               [ 72%]
+tests/test_game_logic.py::test_empty_input_asks_for_a_guess PASSED       [ 81%]
+tests/test_game_logic.py::test_huge_number_is_too_high PASSED            [ 90%]
+tests/test_game_logic.py::test_history_line_shows_attempt_guess_hint_and_closeness PASSED [100%]
 
-============================ 10 passed in 0.02s ============================
+============================== 11 passed in 0.02s ==============================
 ```
 
 ## 🚀 Stretch Features
