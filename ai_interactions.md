@@ -28,9 +28,11 @@
 
 | Edge Case | Prompt Used | AI-Suggested Test | Did It Pass? | Your Reasoning |
 |-----------|-------------|-------------------|--------------|----------------|
-| | | | | |
-| | | | | |
-| | | | | |
+| Negative number (`"-5"`) | "Generate pytest edge-case tests in tests/test_game_logic.py for parse_guess and check_guess: a negative number, a decimal, non-numeric text, empty input, and a very large number." | `test_negative_number_is_too_low` | Yes | A player can type a minus sign by mistake. The game should not crash and should say the guess is too low. |
+| Decimal (`"3.7"`) | same prompt | `test_decimal_guess_is_cut_to_whole_number` | Yes | The secret is a whole number, so a decimal guess must become one. The test shows `parse_guess` cuts 3.7 down to 3. |
+| Non-numeric text (`"abc"`) | same prompt | `test_text_is_not_a_number` | Yes | Typing letters is the most common wrong input. The game should show an error instead of crashing. |
+| Empty input (`""`) | same prompt | `test_empty_input_asks_for_a_guess` | Yes | Clicking Submit with an empty box should ask for a guess, not count as a number. |
+| Very large number (`10**18`) | same prompt | `test_huge_number_is_too_high` | Yes | Checks that a number far outside the range does not break the comparison and is still "Too High". |
 
 ---
 
