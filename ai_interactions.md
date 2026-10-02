@@ -10,15 +10,21 @@
 
 **What task did you give the agent?**
 
-<!-- Describe the goal you asked the agent to accomplish -->
+```
+Add a Guess History feature in the sidebar: after every guess, list all guesses of the current game with their hint and closeness, newest at the top. Put the formatting logic in a new function in logic_utils.py, add a pytest test for it, and make sure flake8 and all tests still pass.
+```
 
 **What did the agent do?**
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+- `logic_utils.py`: added `format_history_line()`, which builds one history line like `#3: 60 — 📈 Go HIGHER! (🔥 Hot)`.
+- `app.py`: added a "Guess History" header and a placeholder in the sidebar, and a `show_history()` function. It runs when the page loads and again right after each guess. The agent used a placeholder because the sidebar is drawn before the guess is counted, so without it the list would be one guess behind (the same problem as the attempts counter).
+- `tests/test_game_logic.py`: added `test_history_line_shows_attempt_guess_hint_and_closeness`.
+- Ran `python -m flake8` (no warnings) and `python -m pytest` (11 passed), and played a scripted game with Streamlit's testing tool to check the sidebar after every guess.
 
 **What did you have to verify or fix manually?**
 
-<!-- Describe anything the agent got wrong or that required human review -->
+I did not have to fix any code. I reviewed the diff and played a game to check that the history updates after each guess and that New Game clears it. I noticed that the attempt numbers skip a number after invalid input (for example #2 is missing after typing "abc"), because invalid input still uses up an attempt. I left that as it is, because it is how the attempts counter already works.
+
 
 ---
 

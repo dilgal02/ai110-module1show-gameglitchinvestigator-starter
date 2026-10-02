@@ -98,6 +98,21 @@ def get_closeness(guess, secret):
     return "🧊 Cold"
 
 
+def format_history_line(attempt, guess, hint, closeness):
+    """Build one line of the Guess History shown in the sidebar.
+
+    Args:
+        attempt: The attempt number of the guess.
+        guess: The number the player guessed.
+        hint: The hint message shown for the guess.
+        closeness: The closeness label from get_closeness().
+
+    Returns:
+        A string such as "#3: 60 — 📈 Go HIGHER! (🔥 Hot)".
+    """
+    return f"#{attempt}: {guess} — {hint} ({closeness})"
+
+
 def update_score(current_score: int, outcome: str, attempt_number: int):
     """Return the new score after a guess.
 

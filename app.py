@@ -7,6 +7,7 @@ from logic_utils import (
     parse_guess,
     check_guess,
     get_closeness,
+    format_history_line,
     update_score,
 )
 
@@ -63,6 +64,28 @@ if "history" not in st.session_state:
 
 if "rounds" not in st.session_state:
     st.session_state.rounds = []
+
+# FEATURE: Guess History in the sidebar. The box is a placeholder so it can
+# be redrawn right after a new guess is added.
+st.sidebar.header("Guess History")
+history_box = st.sidebar.empty()
+
+
+def show_history():
+    """List every valid guess of this game in the sidebar, newest first."""
+    rounds = st.session_state.rounds
+    if not rounds:
+        history_box.caption("No guesses yet.")
+        return
+    lines = [
+        format_history_line(r["Attempt"], r["Guess"], r["Hint"],
+                            r["Closeness"])
+        for r in reversed(rounds)
+    ]
+    history_box.markdown("\n".join(f"- {line}" for line in lines))
+
+
+show_history()
 
 st.subheader("Make a guess")
 
@@ -148,6 +171,7 @@ if submit:
             "Hint": message,
             "Closeness": closeness,
         })
+        show_history()
 
         if show_hint:
             HINT_BOX[closeness](f"{message}  {closeness}")

@@ -1,4 +1,4 @@
-from logic_utils import check_guess, parse_guess
+from logic_utils import check_guess, format_history_line, parse_guess
 
 
 def test_winning_guess():
@@ -63,3 +63,11 @@ def test_empty_input_asks_for_a_guess():
 def test_huge_number_is_too_high():
     outcome, message = check_guess(10**18, 50)
     assert outcome == "Too High"
+
+
+# Guess History feature
+
+
+def test_history_line_shows_attempt_guess_hint_and_closeness():
+    line = format_history_line(3, 60, "📈 Go HIGHER!", "🔥 Hot")
+    assert line == "#3: 60 — 📈 Go HIGHER! (🔥 Hot)"
