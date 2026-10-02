@@ -76,6 +76,28 @@ def check_guess(guess, secret):
         return "Too Low", "📈 Go HIGHER!"
 
 
+def get_closeness(guess, secret):
+    """Describe how close a guess is to the secret number.
+
+    Args:
+        guess: The player's guess.
+        secret: The secret number.
+
+    Returns:
+        "🎯 Exact" for a correct guess, "🔥 Hot" when the guess is at most
+        5 away, "🌡️ Warm" when it is at most 15 away, and "🧊 Cold"
+        otherwise.
+    """
+    distance = abs(guess - secret)
+    if distance == 0:
+        return "🎯 Exact"
+    if distance <= 5:
+        return "🔥 Hot"
+    if distance <= 15:
+        return "🌡️ Warm"
+    return "🧊 Cold"
+
+
 def update_score(current_score: int, outcome: str, attempt_number: int):
     """Return the new score after a guess.
 

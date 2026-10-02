@@ -6,8 +6,17 @@ from logic_utils import (
     get_range_for_difficulty,
     parse_guess,
     check_guess,
+    get_closeness,
     update_score,
 )
+
+# UI: each closeness level gets its own colored box.
+HINT_BOX = {
+    "🎯 Exact": st.success,
+    "🔥 Hot": st.error,
+    "🌡️ Warm": st.warning,
+    "🧊 Cold": st.info,
+}
 
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
@@ -52,6 +61,9 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
+if "rounds" not in st.session_state:
+    st.session_state.rounds = []
+
 st.subheader("Make a guess")
 
 # FIX: This box is drawn before the guess is counted, so "Attempts left"
@@ -68,6 +80,14 @@ def show_attempts_left():
 
 
 show_attempts_left()
+
+
+def show_summary():
+    """Show a table of every valid guess in this game."""
+    if st.session_state.rounds:
+        st.subheader("Game summary")
+        st.dataframe(st.session_state.rounds, hide_index=True)
+
 
 with st.expander("Developer Debug Info"):
     st.write("Secret:", st.session_state.secret)
@@ -92,6 +112,7 @@ with col3:
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(1, 100)
+    st.session_state.rounds = []
     st.success("New game started.")
     st.rerun()
 
@@ -100,6 +121,7 @@ if st.session_state.status != "playing":
         st.success("You already won. Start a new game to play again.")
     else:
         st.error("Game over. Start a new game to try again.")
+    show_summary()
     st.stop()
 
 if submit:
@@ -119,8 +141,16 @@ if submit:
         # always pass a number.
         outcome, message = check_guess(guess_int, st.session_state.secret)
 
+        closeness = get_closeness(guess_int, st.session_state.secret)
+        st.session_state.rounds.append({
+            "Attempt": st.session_state.attempts,
+            "Guess": guess_int,
+            "Hint": message,
+            "Closeness": closeness,
+        })
+
         if show_hint:
-            st.warning(message)
+            HINT_BOX[closeness](f"{message}  {closeness}")
 
         st.session_state.score = update_score(
             current_score=st.session_state.score,
@@ -143,6 +173,9 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+
+        if st.session_state.status != "playing":
+            show_summary()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")

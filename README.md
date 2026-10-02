@@ -71,4 +71,9 @@ tests/test_game_logic.py::test_huge_number_is_too_high PASSED        [100%]
 ## 🚀 Stretch Features
 
 - [x] Advanced Edge-Case Testing: 5 edge-case tests in `tests/test_game_logic.py` (negative number, decimal, text, empty input, huge number). All tests pass, see Test Results above.
+- [x] Enhanced Game UI and Formatting:
+  - Each hint now shows how close the guess is: 🔥 Hot (5 or less away), 🌡️ Warm (15 or less away), 🧊 Cold (further away), or 🎯 Exact for a win. This comes from the new function `get_closeness()` in `logic_utils.py`.
+  - Hints are color-coded: red for Hot, yellow for Warm, blue for Cold and green for a win. The colors are set in the `HINT_BOX` dictionary in `app.py`.
+  - When the game ends (win or out of attempts), a "Game summary" table lists every guess with its attempt number, hint and closeness. This is the new function `show_summary()` in `app.py`; each guess is saved in `st.session_state.rounds`.
+  - The existing game functions (`check_guess`, `parse_guess`, `update_score`) were not changed, and all 10 tests still pass.
 
